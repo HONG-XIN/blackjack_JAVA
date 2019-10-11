@@ -1,0 +1,286 @@
+# Java Project for Blackjack and Trianta Ena
+
+### Authority
+
+- Author		: Dezhou Wang
+- BU-ID          : U46937632
+- Date-Start  : Sep 19, 2019
+- BU Course : CS591 P1 OOD
+
+### Assumptions
+
+#### Blackjack assumptions
+
+- Money and bet are all integers.
+- One game can hold at most 8 players.
+- The number of decks is set to be 1.
+- If the optimal score in hand reaches 21, automatically stand.
+- For each single game, the pile will be reset and shuffled.
+
+#### Trianta Ena assumptions
+
+- Money and bet are all integers.
+- When to set the money for all players, the program will discard all money the players hold ( no matter how much they have ). The first player in the group will automatically be promoted to be the banker.
+- One game will hold up to 10 people ( including banker )
+- If a banker does not have enough to pay for the money to "WIN" players, for current one game, he will still pay the money and he owns a debt, and each player still gets the money. After the checkpoint of the current game, if the banker still owns a debt. The banker will be downgraded to player and cannot join all next games.
+- If a player has 0 money, he is still in the group. But he cannot join all next games.
+- If the optimal score in hand reaches 31, automatically stand.
+- Banker is set to make option automatically ( If >= 27, stand ).
+
+### Class specification
+
+- [x] ConsoleColors [ interface ]
+- [x] CardStaticVariables [ interface ]
+- [x] Card [ class ]
+- [x] DeckStaticVariables [ interface ]
+- [x] Deck [ class ]
+- [x] Pile [ class ]
+- [x] Name [ class ]
+- [x] Money [ class ]
+- [x] Hand [ class ]
+- [x] HandBlackjack [ class ]
+- [x] HandTriantaEna [ class ]
+- [x] GameResult [ interface ]
+- [x] GameResultRecord [ class ]
+
+- [x] People [ class ]Hand
+- [x] Dealer [ class ]
+- [x] DealerBlackjack [ class ]
+- [x] DealerBlackjackHuman [ class ]
+- [x] Player [ class ]
+- [x] PlayerBlackjackBehavior [ interface ]
+- [x] PlayerBlackjack [ class ]
+- [x] PlayerBlackjackHuman [ class ]
+- [x] PlayerTriantaEnaRoles [ interface ]
+- [x] PlayerTriantaEna [ class ]
+- [x] PlayerTriantaEnaHuman [ class ]
+- [x] Group [ generic class ]
+- [x] GroupBlackjack [ class ]
+- [x] GroupTriantaEna [ class ]
+- [x] InterfaceCardGames [ class ]
+- [x] InterfaceBlackjack [ class ]
+- [x] InterfaceTriantaEna [ class ]
+- [x] CardGame [ abstract class ]
+- [x] Blackjack [ class ]
+- [x] TriantaEna [ class ]
+- [x] CardGameMenu [ class ]
+- [x] Main [ class ]
+
+- ConsoleColors
+  - [ interface ]
+  - store the string for RED and RESET
+  - could be used for all other system out which needs color attributes
+- CardStaticVariables 
+  - [ interface ]
+  - assign each suit with a unique integer
+  - define symbols for each suit
+  - could only be used for card object
+- Card
+  - [ class ]
+  - [ implements CardStaticVariables ]
+  - [ implements ConsoleColors ]
+  - represents a single card in playing card games
+  - consist of suit and number
+  - could used for any event which will use cards
+- DeckStaticVariables 
+  - [ interface ]
+  - if a deck contains Jokers
+  - assign WITH_JOKER and WITHOUT_JOKER with unique integers
+  - could only be used for Deck
+- Deck
+  - [ class ]
+  - [ implements DeckStaticVariables ]
+  - [ composite of Card ]
+  - keep track of undrawn cards and drawn cards
+  - could be used for any event which will use deck
+- Pile
+  - [ class ]
+  - [ composite of Deck ]
+  - can contain multiple decks
+  - could be used for any event which will use pile
+- Name
+  - [ class ]
+  - first name
+  - last name
+  - middle name
+  - nick name
+  - could be used for any people who needs to track name
+- Money
+  - [ class ]
+  - value of money
+  - currency of money ( set to be US-dollars by default )
+  - could be used for any event relating with money
+- Hand
+  - [ class ]
+  - [ composite of Cards ]
+  - represents hand holding some cards
+  - could be used for any event which needs something to keep track of some cards
+- HandBlackjack
+  - [ class ]
+  - [ extends Hand ]
+  - [ implements Comparable<HandBlackjack>]
+  - a hand special only for Blackjack games
+  - could only be used for Blackjack games
+- HandTriantaEna
+  - [ class ]
+  - [ extends Hand ]
+  - [ implements Comparable<HandTriantaEna>]
+  - a hand special for Trianta Ena
+  - could only be used for Trianta Ena
+- GameResult
+  - [ interface ]
+  - assign each result to a unique integer
+  - could only be used for any game which has result information
+- GameResultRecord
+  - [ class ]
+  - track number of wins
+  - track number of loses
+  - track number of ties
+  - track number of being a banker
+  - could be used for any player who needs to track the result record
+- People
+  - [ class ]
+  - [ composite of Name ]
+  - [ composite of Money ]
+  - represent one single person with name and money
+  - could be used for any event involving people
+- Dealer
+  - [ class ]
+  - [ extends People ]
+  - [ composite of Pile ]
+  - a person who holds a pile
+  - could be used for any event needing for a person with a pile
+- DealerBlackjack
+  - [ class ]
+  - [ extends Dealer ]
+  - [ implements GameResult ]
+  - [ composite of HandBlackjack ]
+  - represents a dealer in Blackjack
+  - could only be used for Blackjack
+- DealerBlackjackHuman
+  - [ class ]
+  - [ extends DealerBlackjack ]
+  - a human dealer in Blackjack
+  - has scanner to prompt user's input
+  - could only be used for Blackjack
+- Player
+  - [ class ]
+  - [ extends People ]
+  - [ composite of GameResultRecord ]
+  - represent a player in a game
+  - could be used for any game with players
+- PlayerBlackjackBehavior
+  - [ interface ]
+  - describe all primary methods a Blackjack player may have
+- PlayerBlackjack
+  - [ class ]
+  - [ extends Player ]
+  - [ implements PlayerBlackjackBehavior ]
+  - [ implements GameResult ]
+  - [ composite of HandBlackjack ]
+  - represent a Blackjack player
+  - could only be used for Blackjack
+- PlayerBlackjackHuman
+  - [ class ]
+  - [ extends PlayerBlackjack ]
+  - a human Blackjack player
+  - has scanner to prompt for user's input
+  - could only be used for Blackjack
+- PlayerTriantaEnaRoles
+  - [ interface ]
+  - assign each role with a unique integer
+  - could only be used for Trianta Ena
+- PlayerTriantaEna
+  - [ class ]
+  - [ extends Player ]
+  - [ implements PlayerTriantaEnaRoles ]
+  - [ implements GameResult ]
+  - [ composite of HandTriantaEna ]
+  - represent a Trianta Ena player
+  - could only be used for Trianta Ena
+- PlayerTriantaEnaHuman
+  - [ class ]
+  - [ extends PlayerTriantaEna ]
+  - a human Trianta Ena player
+  - has scanner to prompt for user's input
+  - could only be used for Trianta Ena
+- Group
+  - [ generic class ]
+  - track number of decks and list of people
+  - could be used for any event which contain a bunch of people and a pile of cards
+- GroupBlackjack
+  - [ class ]
+  - [ extends Group<PlayerBlackjack> ]
+  - [ composite of DealerBlackjack ]
+  - a group of people who are playing Blackjack
+  - could only be used for Blackjack
+- GroupTriantaEna
+  - [ class ]
+  - [ extends Group<PlayerTriantaEna> ]
+  - [ composite of Pile ]
+  - a group of people who are playing Trianta Ena
+  - could only be used for Trianta Ena
+- InterfaceCardGames
+  - [ class ]
+  - contains multiple static functions
+  - display welcome and other messages
+  - only can be used for the main menu
+- InterfaceBlackjack
+  - [ class ]
+  - contains multiple static functions
+  - display welcome and other messages
+  - only can be used for Blackjack
+- InterfaceTriantaEna
+  - [ class ]
+  - contains multiple static functions
+  - display welcome and other messages
+  - only can be used for Trianta Ena
+- CardGame
+  - [ abstract class ]
+  - indicate basic functions of card games
+  - could be used for any other card games
+- Blackjack
+  - [ class ]
+  - [ extends CardGame ]
+  - [ composite of GroupBlackjack ]
+  - game rules and logic for Blackjack
+  - could only be used for Blackjack
+- TriantaEna
+  - [ class ]
+  - [ extends CardGame ]
+  - [ composite of GroupTriantaEna ]
+  - game rules and logic for Trianta Ena
+  - could only be used for Trianta Ena
+- CardGamesMenu
+  - [ class ]
+  - asks user to choose which game to play
+  - could only be used for the stage when choosing which card game to play
+- Main
+  - [ class ]
+  - java this class to run the program
+  - could only be used for this project
+
+### Programming choice
+
+- Card [ class ] will return colored string if terminal supports
+- Other classes only use the nick_name in Name [ class ]
+- Value of money in Money [ class ] is Integer, not float
+- Currency of money in Money [ class ] is set to be "US-dollars"
+- Deck [ class ] cannot contain only LITTLE_JOKER or only BIG_JOKER
+- In Pile [ class ], all decks must have same attribute for if to include Jokers
+- In all classes, all functions are arranged in the following order
+  - instances
+  - constructors
+  - accessor methods
+  - mutator methods
+  - primary functions
+  - other functions
+  - helper functions
+  - override functions
+
+### Something relating Blackjack improved during making Trianta Ena
+
+- Create Name [ class ]
+- Create Money [ class ]
+- Add something to Card [ class ] to make it print colored string
+- Delete something in InterfaceBlackjack [ class ] to make it print less information
